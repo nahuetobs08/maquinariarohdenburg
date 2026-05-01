@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Maquinarias Industriales</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <h1>Maquinarias Industriales</h1>
+    <p>ALBERTO N ROHDENBURG - Servicio Técnico de Equipos de Rutina</p>
+</header>
+
+<section class="hero">
+    <h2>Catálogo de Máquinas</h2>
+    <p>
+        Maquinaria para Laboratorios 
+        
+    </p>
+</section>
+
+<main class="container">
+    <div class="buscador">
+    <input type="text" id="busqueda" placeholder="Buscar máquina...">
+</div>
+    <div id="catalogo" class="catalogo"></div>
+</main>
+
+
+<footer>
+    <p>
+        📍 Quilmes, Bs. As <br>
+        📧 albertonestor@gmail.com <br>
+        📞 11-3856-7918
+    </p>
+</footer>
+
+<script>
+const maquinas = [
+    { id:1, img:"maquina1.jpg", nombre:"Agitador Orbital", desc:"Agitación circular continua para cultivos y mezclas." },
+    { id:2, img:"maquina2.jpg", nombre:"Centrifuga de Laboratorio", desc:"Separación de muestras por fuerza centrífuga." },
+    { id:3, img:"maquina3.jpg", nombre:"Plancha Calefactora", desc:"Equipo para calentar muestras de forma uniforme" },
+    { id:4, img:"maquina4.jpg", nombre:"Baño Termostatizado de Laboratorio", desc:"Mantiene temperatura constante para muestras." },
+    { id:5, img:"maquina5.jpg", nombre:"Agitador Vortex", desc:"Mezcla rápida de tubos mediante vibración." },
+    { id:6, img:"maquina6.jpg", nombre:"Bomba de Vacio Portatil", desc:"Equipo compacto para generar vacío y realizar succión." },
+    { id:7, img:"maquina7.jpg", nombre:"Estufa de Esterilizacion", desc:"Elimina microorganismos por calor." },
+    { id:8, img:"maquina8.jpg", nombre:"Estufa de Cultivo ANACROM", desc:"Incubación a temperatura controlada." },
+    { id:9, img:"maquina9.jpg", nombre:"Controlador de Temperatura", desc:"Regulación automática de temperatura." },
+    { id:10, img:"maquina10.jpg", nombre:"Medidor de profundidad", desc:"Mide la profundidad de orificios y cavidades con precisión." },
+    { id:11, img:"maquina11.jpg", nombre:"Soportes para balones de vidrio en equipos KJELDAHL", desc:"Sostienen balones de vidrio de forma segura durante el proceso Kjeldahl." }
+];
+
+const catalogo = document.getElementById("catalogo");
+const buscador = document.getElementById("busqueda");
+
+function render(maquinasFiltradas) {
+    catalogo.innerHTML = "";
+
+    maquinasFiltradas.forEach((maq, index) => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.style.animationDelay = `${index * 0.1}s`;
+
+        const mensaje = encodeURIComponent(`Hola, quiero consultar por ${maq.nombre}`);
+
+        card.innerHTML = `
+    <img src="img/${maq.img}" alt="${maq.nombre}">
+    <div class="card-content">
+        <h3>${maq.nombre || "Equipo de laboratorio"}</h3>
+        <p>${maq.desc}</p>
+
+                <a class="btn-wsp" 
+                   href="https://wa.me/5491138567918?text=${mensaje}" 
+                   target="_blank">
+                   Consultar por WhatsApp
+                </a>
+
+                <a class="btn-info" href="maquina.html?id=${maq.id}">
+                    Ver más
+                </a>
+            </div>
+        `;
+
+        catalogo.appendChild(card);
+    });
+}
+
+// render inicial
+render(maquinas);
+
+// filtro en vivo
+buscador.addEventListener("keyup", () => {
+    const texto = buscador.value.toLowerCase();
+
+    const filtradas = maquinas.filter(m =>
+        m.nombre.toLowerCase().includes(texto)
+    );
+
+    render(filtradas);
+});
+</script>
+
+</body>
+</html>
