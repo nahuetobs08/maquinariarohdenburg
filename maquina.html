@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Máquina</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .card-detalle {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            animation: aparecer 0.5s ease;
+        }
+
+        .media {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .media img, .media video {
+            width: 50%;
+            max-height: 400px;
+            object-fit: contain;
+            background: #f8fafc;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .media {
+                flex-direction: column;
+            }
+
+            .media img, .media video {
+                width: 100%;
+            }
+        }
+
+        .contenido {
+            padding: 20px;
+        }
+
+        .botones {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .wsp {
+            background: #25d366;
+            color: white;
+        }
+
+        .volver {
+            background: #3b82f6;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card-detalle">
+        <div class="media">
+            <img id="imagen">
+            <video id="video" autoplay loop muted playsinline style="display:none;">
+                <source src="video.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="contenido">
+            <h1 id="nombre"></h1>
+            <p id="descripcion"></p>
+
+            <div class="botones">
+                <a id="wsp" class="btn wsp" target="_blank">Consultar por WhatsApp</a>
+                <a href="index.html" class="btn volver">← Volver</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const maquinas = [
+    { id:1, nombre:"Agitador Orbital", desc:"Agitación circular continua para cultivos y mezclas.", img:"maquina1.jpg" },
+    { id:2, nombre:"Centrifuga de Laboratorio", desc:"Separación de muestras por fuerza centrífuga.", img:"maquina2.jpg" },
+    { id:3, nombre:"Plancha Calefactora", desc:"Equipo para calentar muestras de forma uniforme.", img:"maquina3.jpg" },
+    { id:4, nombre:"Baño Termostatizado de Laboratorio", desc:"Mantiene temperatura constante para muestras.", img:"maquina4.jpg" },
+    { id:5, nombre:"Agitador Vortex", desc:"Mezcla rápida de tubos mediante vibración.", img:"maquina5.jpg" },
+    { id:6, nombre:"Bomba de Vacio Portatil", desc:"Equipo compacto para generar vacío y succión.", img:"maquina6.jpg" },
+    { id:7, nombre:"Estufa de Esterilizacion", desc:"Elimina microorganismos por calor.", img:"maquina7.jpg" },
+    { id:8, nombre:"Estufa de Cultivo ANACROM", desc:"Incubación a temperatura controlada.", img:"maquina8.jpg" },
+    { id:9, nombre:"Controlador de Temperatura", desc:"Regulación automática de temperatura.", img:"maquina9.jpg" },
+    { id:10, nombre:"Medidor de profundidad", desc:"Mide la profundidad de orificios y cavidades con precisión.", img:"maquina10.jpg" },
+    { id:11, nombre:"Soportes para balones de vidrio en equipos KJELDAHL", desc:"Sostienen balones de vidrio de forma segura durante el proceso Kjeldahl.", img:"maquina11.jpg" }
+];
+
+const params = new URLSearchParams(window.location.search);
+const id = parseInt(params.get("id"));
+
+const maquina = maquinas.find(m => m.id === id);
+
+if (maquina) {
+    document.getElementById("nombre").textContent = maquina.nombre;
+    document.getElementById("descripcion").textContent = maquina.desc;
+    document.getElementById("imagen").src = "img/" + maquina.img;
+
+    const mensaje = encodeURIComponent(`Hola, quiero consultar por ${maquina.nombre}`);
+    document.getElementById("wsp").href = `https://wa.me/5491138567918?text=${mensaje}`;
+
+    const video = document.getElementById("video");
+
+    if (maquina.id === 5) {
+        video.style.display = "block";
+    } else {
+        video.style.display = "none";
+    }
+}
+</script>
+
+</body>
+</html>
